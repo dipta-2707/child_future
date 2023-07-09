@@ -1,3 +1,4 @@
+import 'package:child_future/config/route_config.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -5,8 +6,12 @@ class SignInPageController extends GetxController{
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    void signIn(){
+    final formKey = GlobalKey<FormState>();
 
+    void signIn(){
+        if(formKey.currentState!.validate()){
+
+        }
     }
 
     void gotoForgetPassword(){
@@ -14,6 +19,6 @@ class SignInPageController extends GetxController{
     }
 
     void gotoSignUp(){
-        
+        Get.toNamed(AppRouteConfig.signUpRoute);
     }
 }

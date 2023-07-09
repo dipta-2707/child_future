@@ -9,6 +9,7 @@ class SignInPage extends GetView<SignInPageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: SafeArea(child: Form(
+        key: controller.formKey,
         child: ListView(
           children: [
             ClipRRect(
@@ -32,6 +33,14 @@ class SignInPage extends GetView<SignInPageController> {
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
               child: TextFormField(
                 controller: controller.emailController,
+                validator: (value) {
+
+                    if(value == null || value.isEmpty || !value.contains('@')){
+                      return 'enter a valid email.';
+                    }
+
+                  return null;
+                },
                 decoration: const InputDecoration(
                   labelText: 'Email',
                   prefixIcon: Icon(Icons.email)
@@ -63,7 +72,9 @@ class SignInPage extends GetView<SignInPageController> {
             const SizedBox(height: 10.0,),
             Padding(
               padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: ElevatedButton(onPressed: (){},
+              child: ElevatedButton(onPressed: (){
+                controller.signIn();
+              },
                   child: const Text('Sign In')),
             ),
             const SizedBox(height: 30.0,),
@@ -71,7 +82,9 @@ class SignInPage extends GetView<SignInPageController> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const Text('Already have an account?'),
-                TextButton(onPressed: (){},
+                TextButton(onPressed: (){
+                  controller.gotoSignUp();
+                },
                     child: Text('Sign Up',style: Get.textTheme.bodyMedium, ))
               ],
             )
