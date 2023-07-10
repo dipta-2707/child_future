@@ -1,3 +1,4 @@
+import 'package:child_future/Api.dart';
 import 'package:flutter/material.dart';
 
 class OrganizationView extends StatelessWidget {
@@ -13,17 +14,34 @@ class OrganizationView extends StatelessWidget {
           ),
           SizedBox(height: 12.0,),
           Expanded(
-            child: ListView.separated(
-                itemBuilder: (context, index) => _organizationTile(name: 'name', email: 'email'),
-                separatorBuilder: (context, index) => SizedBox(height: 8.0,),
-                itemCount: 15),
+            child: StreamBuilder(
+              stream: AppApi.getOrganizations(),
+              builder:(context, snapshot){
+
+                if(snapshot.hasData){
+                  return  ListView.separated(
+                      itemBuilder: (context, index) {
+                        print(snapshot.data!.docs[index].data()['name']);
+                        return _organizationTile(
+                            image: snapshot.data!.docs[index].data()['image'],
+                            name: snapshot.data!.docs[index].data()['name'], email: snapshot.data!.docs[index].data()['email']);
+                      },
+                      separatorBuilder: (context, index) => SizedBox(height: 8.0,),
+                      itemCount: snapshot.data!.size);
+                }
+                else{
+                  return Center(child: CircularProgressIndicator());
+                }
+              }
+
+            ),
           )
         ],
       ),
     );
   }
   
-  Widget _organizationTile({required String name, required String email}){
+  Widget _organizationTile({required String image, required String name, required String email}){
     return DecoratedBox(
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10.0),
@@ -32,8 +50,7 @@ class OrganizationView extends StatelessWidget {
         )
       ),
       child: ListTile(
-
-        leading: Image.network('https://www.w3schools.com/w3images/avatar6.png',fit: BoxFit.fill,),
+        leading: Image.network(image,fit: BoxFit.fill,),
         title: Text(name),
         subtitle: Text(email),
         trailing: Icon(Icons.arrow_circle_right),
