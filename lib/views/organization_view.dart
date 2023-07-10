@@ -17,11 +17,9 @@ class OrganizationView extends StatelessWidget {
             child: StreamBuilder(
               stream: AppApi.getOrganizations(),
               builder:(context, snapshot){
-
                 if(snapshot.hasData){
                   return  ListView.separated(
                       itemBuilder: (context, index) {
-                        print(snapshot.data!.docs[index].data()['name']);
                         return _organizationTile(
                             image: snapshot.data!.docs[index].data()['image'],
                             name: snapshot.data!.docs[index].data()['name'], email: snapshot.data!.docs[index].data()['email']);
@@ -30,7 +28,7 @@ class OrganizationView extends StatelessWidget {
                       itemCount: snapshot.data!.size);
                 }
                 else{
-                  return Center(child: CircularProgressIndicator());
+                  return const Center(child: CircularProgressIndicator());
                 }
               }
 

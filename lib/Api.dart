@@ -12,4 +12,9 @@ class AppApi{
         .collection('organizations').snapshots();
   }
 
+  // get child data
+  static Stream<QuerySnapshot<Map<String, dynamic>>> getVictims() {
+    return firebaseStore
+        .collection('victims').snapshots();
+  }
 }

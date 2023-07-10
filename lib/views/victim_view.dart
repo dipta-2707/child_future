@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../Api.dart';
+
 class VictimView extends StatelessWidget {
   const VictimView({super.key});
 
@@ -13,16 +15,28 @@ class VictimView extends StatelessWidget {
           ),
           SizedBox(height: 12.0,),
           Expanded(
-            child: ListView.separated(
-                itemBuilder: (context, index) => _victimTile(name: 'name', ),
-                separatorBuilder: (context, index) => SizedBox(height: 8.0,),
-                itemCount: 15),
+            child: StreamBuilder(
+                stream: AppApi.getVictims(),
+                builder:(context, snapshot){
+                  if(snapshot.hasData){
+                    return ListView.separated(
+                        itemBuilder: (context, index) => _victimTile(name: snapshot.data!.docs[index].data()['name'], image: snapshot.data!.docs[index].data()['image']),
+                        separatorBuilder: (context, index) => SizedBox(height: 8.0,),
+                        itemCount: snapshot.data!.size);
+                  }
+                  else{
+                    return const Center(child: CircularProgressIndicator());
+                  }
+                }
+
+            ),
           )
+
         ],
       ),
     );
   }
-  Widget _victimTile({required String name,}){
+  Widget _victimTile({required String name,required String image}){
     return DecoratedBox(
       decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(10.0),
@@ -32,7 +46,7 @@ class VictimView extends StatelessWidget {
       ),
       child: ListTile(
 
-        leading: Image.network('https://www.w3schools.com/w3images/avatar6.png',fit: BoxFit.fill,),
+        leading: Image.network(image,fit: BoxFit.fill,),
         title: Text(name),
         trailing: Icon(Icons.arrow_circle_right),
       ),
