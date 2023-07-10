@@ -1,5 +1,4 @@
-import 'dart:convert';
-
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:child_future/Api.dart';
 import 'package:child_future/model/organization_model.dart';
 import 'package:flutter/material.dart';
@@ -73,11 +72,11 @@ class OrganizationView extends StatelessWidget {
         },
         leading: Image.network(
           organizationModel.image,
-          fit: BoxFit.fill,
+          fit: BoxFit.cover,
         ),
         title: Text(organizationModel.name),
         subtitle: Text(organizationModel.email),
-        trailing: Icon(Icons.arrow_circle_right),
+        trailing: const Icon(Icons.arrow_circle_right),
       ),
     );
   }
