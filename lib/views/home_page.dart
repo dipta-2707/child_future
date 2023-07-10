@@ -1,3 +1,5 @@
+import 'package:child_future/Api.dart';
+import 'package:child_future/config/route_config.dart';
 import 'package:child_future/controller/home_page_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -9,22 +11,22 @@ class HomePage extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Welcome, Akash Das'),
-        actions: const [
+        title: Text(
+            'Welcome, ${AppApi.firebaseAuth.currentUser?.displayName ?? 'Guest'}'),
+        actions: [
           Padding(
-            padding: EdgeInsets.only(right: 12.0),
-            child: CircleAvatar(
-
-            ),
+            padding: const EdgeInsets.only(right: 12.0),
+            child: IconButton(
+                onPressed: () {
+                  Get.toNamed(AppRouteConfig.profiledRoute);
+                },
+                icon: const Icon(Icons.person)),
           )
         ],
       ),
-
-      body: Obx(
-
-          ()=> controller.indexPages[controller.selectedIndex.value]),
+      body: Obx(() => controller.indexPages[controller.selectedIndex.value]),
       bottomNavigationBar: Obx(
-        ()=> BottomNavigationBar(
+        () => BottomNavigationBar(
           items: const <BottomNavigationBarItem>[
             BottomNavigationBarItem(
               icon: Icon(Icons.home),
@@ -41,7 +43,7 @@ class HomePage extends GetView<HomePageController> {
           ],
           currentIndex: controller.selectedIndex.value,
           onTap: (value) {
-              controller.onPageTap(value);
+            controller.onPageTap(value);
           },
         ),
       ),

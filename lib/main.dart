@@ -10,7 +10,7 @@ void main() {
   runApp(const MyApp());
 }
 
-void initFirebase()async{
+void initFirebase() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -29,9 +29,8 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      initialRoute: AppRouteConfig.signInRoute,
+      initialRoute: AppRouteConfig.splashRoute,
       getPages: AppRouteConfig.getPages,
     );
   }
 }
-
