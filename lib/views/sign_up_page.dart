@@ -8,78 +8,82 @@ class SignUpPage extends GetView<SignUpPageController> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: Form(child: ListView(
+      body: SafeArea(child: ListView(
         children: [
-          ClipRRect(
-            borderRadius: const BorderRadius.only(
-                bottomRight: Radius.circular(30.0),
-                bottomLeft: Radius.circular(30.0)
-            ),
-            child: Image.asset('assets/child02.jpeg',
-              height: Get.height * 0.3,
-              width: Get.width,
-              fit: BoxFit.cover,
-            ),
-          ),
-          const SizedBox(height: 10.0,),
-          Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 20.0),
-              child: Text('Sign Up',style: Get.textTheme.displaySmall,)),
-          // Username
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              controller: controller.userNameController,
-              validator: (value) {
+      ClipRRect(
+        borderRadius: const BorderRadius.only(
+            bottomRight: Radius.circular(30.0),
+            bottomLeft: Radius.circular(30.0)
+        ),
+        child: Image.asset('assets/child02.jpeg',
+          height: Get.height * 0.3,
+          width: Get.width,
+          fit: BoxFit.cover,
+        ),
+      ),
+      const SizedBox(height: 10.0,),
+      Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 20.0),
+          child: Text('Sign Up',style: Get.textTheme.displaySmall,)),
+      // Username
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: TextFormField(
+          controller: controller.userNameController,
 
-                if(value == null || value.isEmpty ){
-                  return 'enter your Name.';
-                }
-
-                return null;
-              },
-              decoration: const InputDecoration(
-                  labelText: 'Name',
-                  prefixIcon: Icon(Icons.person)
-              ),
-            ),
+          decoration: const InputDecoration(
+              labelText: 'Name',
+              prefixIcon: Icon(Icons.person)
           ),
-          const SizedBox(height: 10.0,),
-          // email
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              controller: controller.emailController,
-              validator: (value) {
+        ),
+      ),
+      const SizedBox(height: 10.0,),
+      // email
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: TextFormField(
+          controller: controller.emailController,
 
-                if(value == null || value.isEmpty || !value.contains('@')){
-                  return 'enter a valid email.';
-                }
-
-                return null;
-              },
-              decoration: const InputDecoration(
-                  labelText: 'Email',
-                  prefixIcon: Icon(Icons.email)
-              ),
-            ),
+          decoration: const InputDecoration(
+              labelText: 'Email',
+              prefixIcon: Icon(Icons.email)
           ),
-          const SizedBox(height: 10.0,),
-          // password
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0),
-            child: TextFormField(
-              controller: controller.passwordController,
-              obscureText: true,
-              decoration: const InputDecoration(
-                  labelText: 'Password',
-                  prefixIcon: Icon(Icons.key)
-              ),
-            ),
+        ),
+      ),
+      const SizedBox(height: 10.0,),
+      // password
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: TextFormField(
+          controller: controller.passwordController,
+          obscureText: true,
+          decoration: const InputDecoration(
+              labelText: 'Password',
+              prefixIcon: Icon(Icons.key)
           ),
-          const SizedBox(height: 8.0,),
+        ),
+      ),
+      const SizedBox(height: 10.0,),
+      Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 20.0),
+        child: ElevatedButton(onPressed: (){
+          controller.signUp();
+        },
+            child: const Text('Sign Up')),
+      ),
+      const SizedBox(height: 30.0,),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          const Text('Already have an account?'),
+          TextButton(onPressed: (){
+            controller.gotoSignIn();
+          },
+              child: Text('Sign In',style: Get.textTheme.bodyMedium, ))
         ],
-      ))),
+      )
+        ],
+      )),
     );
   }
 }

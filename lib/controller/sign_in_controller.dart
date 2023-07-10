@@ -6,12 +6,9 @@ class SignInPageController extends GetxController{
     TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
 
-    final formKey = GlobalKey<FormState>();
 
     void signIn(){
-        if(formKey.currentState!.validate()){
-
-        }
+        Get.offAndToNamed(AppRouteConfig.homeRoute);
     }
 
     void gotoForgetPassword(){
