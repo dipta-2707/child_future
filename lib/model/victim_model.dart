@@ -5,13 +5,14 @@ class VictimModel {
   final bool isReceive;
   final String address;
   final String name;
+  final String submittedBy;
 
-  VictimModel({
-    required this.image,
-    required this.isReceive,
-    required this.address,
-    required this.name,
-  });
+  VictimModel(
+      {required this.image,
+      required this.isReceive,
+      required this.address,
+      required this.name,
+      required this.submittedBy});
 
   factory VictimModel.fromRawJson(String str) =>
       VictimModel.fromJson(json.decode(str));
@@ -23,6 +24,7 @@ class VictimModel {
         isReceive: json["is_receive"] ?? false,
         address: json["address"] ?? "unknown",
         name: json["name"] ?? "unknown",
+        submittedBy: json["submitted_by"] ?? "unknown",
       );
 
   Map<String, dynamic> toJson() => {
@@ -30,5 +32,6 @@ class VictimModel {
         "is_receive": isReceive,
         "address": address,
         "name": name,
+        "submitted_by": submittedBy
       };
 }

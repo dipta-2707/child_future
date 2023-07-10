@@ -55,6 +55,7 @@ class VictimView extends StatelessWidget {
           Get.defaultDialog(
               title: victimModel.name,
               content: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image.network(
                     victimModel.image,
@@ -65,7 +66,8 @@ class VictimView extends StatelessWidget {
                   const SizedBox(
                     height: 8.0,
                   ),
-                  Text('Address: ${victimModel.address}')
+                  Text('Address: ${victimModel.address}'),
+                  Text('Receive: ${victimModel.isReceive}'),
                 ],
               ));
         },
