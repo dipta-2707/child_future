@@ -37,7 +37,7 @@ class HomePage extends GetView<HomePageController> {
               label: 'Organization',
             ),
             BottomNavigationBarItem(
-              icon: Icon(Icons.scale),
+              icon: Icon(Icons.accessibility),
               label: 'Victim',
             ),
           ],

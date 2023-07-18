@@ -3,6 +3,7 @@ import 'package:child_future/Api.dart';
 import 'package:child_future/model/organization_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class OrganizationView extends StatelessWidget {
   const OrganizationView({super.key});
@@ -76,7 +77,11 @@ class OrganizationView extends StatelessWidget {
         ),
         title: Text(organizationModel.name),
         subtitle: Text(organizationModel.email),
-        trailing: const Icon(Icons.arrow_circle_right),
+        trailing: IconButton(onPressed: ()async{
+          Uri phoneno = Uri(scheme: 'tel', path: '+8801746841260');
+          await launchUrl(phoneno);
+        },
+            icon: const Icon(Icons.phone)),
       ),
     );
   }

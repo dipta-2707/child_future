@@ -11,6 +11,7 @@ import 'package:child_future/views/report_child_page.dart';
 import 'package:child_future/views/sign_in_page.dart';
 import 'package:child_future/views/sign_up_page.dart';
 import 'package:child_future/views/splash_page.dart';
+import 'package:child_future/views/victim_details_page.dart';
 import 'package:get/get.dart';
 
 class AppRouteConfig {
@@ -21,6 +22,7 @@ class AppRouteConfig {
   static const String reportChildRoute = '/reportChildRoutePage';
   static const String profiledRoute = '/profiledRoutePage';
   static const String forgetPassword = '/forgetPasswordPage';
+  static const String victimDetails = '/victimDetails';
   static final getPages = [
     GetPage(
         name: splashRoute,
