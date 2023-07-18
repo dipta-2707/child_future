@@ -40,6 +40,10 @@ class HomePage extends GetView<HomePageController> {
               icon: Icon(Icons.accessibility),
               label: 'Victim',
             ),
+            BottomNavigationBarItem(
+              icon: Icon(Icons.qr_code),
+              label: 'Scan Victim',
+            ),
           ],
           currentIndex: controller.selectedIndex.value,
           onTap: (value) {

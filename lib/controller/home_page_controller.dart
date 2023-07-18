@@ -2,6 +2,7 @@
 
 import 'package:child_future/config/route_config.dart';
 import 'package:child_future/views/home_view.dart';
+import 'package:child_future/views/qr_scanner_view.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -13,6 +14,7 @@ class HomePageController extends GetxController{
       homeView(),
       OrganizationView(),
       VictimView(),
+      QrScannerView()
     ];
 
     RxInt selectedIndex = 0.obs;
