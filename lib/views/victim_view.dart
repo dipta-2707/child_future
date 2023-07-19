@@ -36,7 +36,7 @@ class VictimView extends GetView<HomePageController> {
               }
             },
           ),
-          SizedBox(
+         const  SizedBox(
             height: 12.0,
           ),
           Expanded(

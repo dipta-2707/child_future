@@ -130,7 +130,11 @@ class homeView extends StatelessWidget {
                 },
               ))
             ],
-          )
+          ),
+          TextButton(onPressed: (){
+            Get.toNamed(AppRouteConfig.adoptFormView);
+          },
+              child: const Text('Submit adopt form'))
         ],
       ),
     );

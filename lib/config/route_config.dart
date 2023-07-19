@@ -4,6 +4,7 @@ import 'package:child_future/binding/report_child_binding.dart';
 import 'package:child_future/binding/sign_in_page_binding.dart';
 import 'package:child_future/binding/sign_up_page_binding.dart';
 import 'package:child_future/binding/splash_binding.dart';
+import 'package:child_future/views/adopt_form_view.dart';
 import 'package:child_future/views/forget_pass_page.dart';
 import 'package:child_future/views/home_page.dart';
 import 'package:child_future/views/profile_page.dart';
@@ -14,6 +15,8 @@ import 'package:child_future/views/splash_page.dart';
 import 'package:child_future/views/victim_details_page.dart';
 import 'package:get/get.dart';
 
+import '../binding/adopt_form_binding.dart';
+
 class AppRouteConfig {
   static const String splashRoute = '/splash';
   static const String signInRoute = '/signInPageRoutePath';
@@ -23,6 +26,7 @@ class AppRouteConfig {
   static const String profiledRoute = '/profiledRoutePage';
   static const String forgetPassword = '/forgetPasswordPage';
   static const String victimDetails = '/victimDetails';
+  static const String adoptFormView = '/adoptForm';
   static final getPages = [
     GetPage(
         name: splashRoute,
@@ -55,6 +59,11 @@ class AppRouteConfig {
     GetPage(
         name: forgetPassword,
         page: () => const ForgetPassPage(),
+        transition: Transition.fadeIn),
+    GetPage(
+        name: adoptFormView,
+        page: () => const AdoptFormView(),
+        binding: AdoptFormBinding(),
         transition: Transition.fadeIn),
   ];
 }
