@@ -3,6 +3,9 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import '../Api.dart';
+import '../config/route_config.dart';
+
 class SignInPage extends GetView<SignInPageController> {
   const SignInPage({super.key});
 
@@ -79,8 +82,18 @@ class SignInPage extends GetView<SignInPageController> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ElevatedButton(
                 onPressed: () {
-
-                    controller.signIn();
+                  try {
+                    AppApi.firebaseAuth
+                        .signInWithEmailAndPassword(
+                        email:controller.emailController.text, password: controller.passwordController.text)
+                        .then((value) {
+                      controller.clearController();
+                      Get.offAndToNamed(AppRouteConfig.homeRoute);
+                    });
+                  }on FirebaseAuthException catch (e){
+                    Get.snackbar('Error', e.message.toString(), backgroundColor: Colors.red);
+                  }
+                  controller.clearController();
 
                 },
                 child: const Text('Sign In')),
