@@ -28,5 +28,10 @@ class HomePageController extends GetxController{
 
     TextEditingController orgSearchController = TextEditingController();
 
+    RxList<DocumentSnapshot> vicDocuments = <DocumentSnapshot>[].obs;
+    RxList<DocumentSnapshot> vicFilterDocuments = <DocumentSnapshot>[].obs;
+
+    TextEditingController vicSearchController = TextEditingController();
+
     void gotoReportChild()=>Get.toNamed(AppRouteConfig.reportChildRoute);
 }

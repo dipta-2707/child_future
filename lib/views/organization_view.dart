@@ -32,7 +32,6 @@ class OrganizationView extends GetView<HomePageController> {
               }else{
                 controller.orgFilterDocuments.value = controller.orgDocuments;
               }
-              print(controller.orgFilterDocuments);
             },
           ),
           SizedBox(

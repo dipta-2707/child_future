@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:child_future/controller/home_page_controller.dart';
 import 'package:child_future/model/victim_model.dart';
 import 'package:child_future/views/victim_details_page.dart';
 import 'package:flutter/material.dart';
@@ -8,7 +9,7 @@ import 'package:qr_flutter/qr_flutter.dart';
 
 import '../Api.dart';
 
-class VictimView extends StatelessWidget {
+class VictimView extends GetView<HomePageController> {
   const VictimView({super.key});
 
   @override
@@ -20,6 +21,20 @@ class VictimView extends StatelessWidget {
 
           SearchBar(
             hintText: 'Search by name...',
+            controller: controller.vicSearchController,
+            onChanged: (value) {
+              if (controller.vicSearchController.text.isNotEmpty) {
+                controller.vicFilterDocuments.value = controller.vicDocuments.where((element) {
+                  return element
+                      .get('name')
+                      .toString()
+                      .toLowerCase()
+                      .contains(controller.vicSearchController.text.toLowerCase());
+                }).toList();
+              }else{
+                controller.vicFilterDocuments.value = controller.vicDocuments;
+              }
+            },
           ),
           SizedBox(
             height: 12.0,
@@ -29,16 +44,20 @@ class VictimView extends StatelessWidget {
                 stream: AppApi.getVictims(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return ListView.separated(
-                        itemBuilder: (context, index) => _victimTile(
-                          docId: snapshot.data!.docs[index].id,
-                              victimModel: VictimModel.fromJson(
-                                  snapshot.data!.docs[index].data()),
-                            ),
-                        separatorBuilder: (context, index) => const SizedBox(
-                              height: 8.0,
-                            ),
-                        itemCount: snapshot.data!.size);
+                    controller.vicDocuments.value = snapshot.data!.docs;
+                    controller.vicFilterDocuments.value =  snapshot.data!.docs;
+                    return Obx(
+                      ()=> ListView.separated(
+                          itemBuilder: (context, index) => _victimTile(
+                            docId: controller.vicFilterDocuments[index].id,
+                                victimModel: VictimModel.fromRawJson(
+                                    jsonEncode(controller.vicFilterDocuments[index].data())),
+                              ),
+                          separatorBuilder: (context, index) => const SizedBox(
+                                height: 8.0,
+                              ),
+                          itemCount: controller.vicFilterDocuments.length),
+                    );
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
