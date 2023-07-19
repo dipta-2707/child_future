@@ -1,4 +1,5 @@
 import 'package:child_future/controller/sign_up_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -67,8 +68,8 @@ class SignUpPage extends GetView<SignUpPageController> {
       Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0),
         child: ElevatedButton(onPressed: (){
-          controller.signUp();
-        },
+                    controller.signUp();
+                },
             child: const Text('Sign Up')),
       ),
       const SizedBox(height: 30.0,),

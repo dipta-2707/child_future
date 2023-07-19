@@ -1,4 +1,5 @@
 import 'package:child_future/controller/sign_in_controller.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -78,7 +79,9 @@ class SignInPage extends GetView<SignInPageController> {
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ElevatedButton(
                 onPressed: () {
-                  controller.signIn();
+
+                    controller.signIn();
+
                 },
                 child: const Text('Sign In')),
           ),

@@ -1,5 +1,6 @@
 import 'package:child_future/Api.dart';
 import 'package:child_future/config/route_config.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -21,7 +22,9 @@ class SignUpPageController extends GetxController {
         Get.snackbar('Success', 'Account created Successfully');
         clearController();
       });
-    } catch (e) {}
+    }on FirebaseAuthException catch (e) {
+      Get.snackbar('Error', e.message.toString(), backgroundColor: Colors.red, );
+    }
     clearController();
   }
 

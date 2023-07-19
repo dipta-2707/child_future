@@ -3,6 +3,7 @@
 import 'package:child_future/config/route_config.dart';
 import 'package:child_future/views/home_view.dart';
 import 'package:child_future/views/qr_scanner_view.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
 
@@ -21,6 +22,11 @@ class HomePageController extends GetxController{
     void onPageTap(int value){
       selectedIndex.value = value;
     }
+
+    RxList<DocumentSnapshot> orgDocuments = <DocumentSnapshot>[].obs;
+    RxList<DocumentSnapshot> orgFilterDocuments = <DocumentSnapshot>[].obs;
+
+    TextEditingController orgSearchController = TextEditingController();
 
     void gotoReportChild()=>Get.toNamed(AppRouteConfig.reportChildRoute);
 }

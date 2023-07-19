@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:child_future/Api.dart';
+import 'package:child_future/controller/home_page_controller.dart';
 import 'package:child_future/model/organization_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class OrganizationView extends StatelessWidget {
+class OrganizationView extends GetView<HomePageController> {
   const OrganizationView({super.key});
 
   @override
@@ -16,6 +19,21 @@ class OrganizationView extends StatelessWidget {
         children: [
           SearchBar(
             hintText: 'Search by name...',
+            controller: controller.orgSearchController,
+            onChanged: (value) {
+              if (controller.orgSearchController.text.isNotEmpty) {
+                controller.orgFilterDocuments.value = controller.orgDocuments.where((element) {
+                  return element
+                      .get('name')
+                      .toString()
+                      .toLowerCase()
+                      .contains(controller.orgSearchController.text.toLowerCase());
+                }).toList();
+              }else{
+                controller.orgFilterDocuments.value = controller.orgDocuments;
+              }
+              print(controller.orgFilterDocuments);
+            },
           ),
           SizedBox(
             height: 12.0,
@@ -25,16 +43,20 @@ class OrganizationView extends StatelessWidget {
                 stream: AppApi.getOrganizations(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData) {
-                    return ListView.separated(
-                        itemBuilder: (context, index) {
-                          return _organizationTile(
-                              organizationModel: OrganizationModel.fromJson(
-                                  snapshot.data!.docs[index].data()));
-                        },
-                        separatorBuilder: (context, index) => SizedBox(
-                              height: 8.0,
-                            ),
-                        itemCount: snapshot.data!.size);
+                    controller.orgDocuments.value = snapshot.data!.docs;
+                    controller.orgFilterDocuments.value =  snapshot.data!.docs;
+                    return Obx(
+                        ()=> ListView.separated(
+                          itemBuilder: (context, index) {
+                            return _organizationTile(
+                                organizationModel: OrganizationModel.fromRawJson(
+                                    jsonEncode(controller.orgFilterDocuments[index].data())));
+                          },
+                          separatorBuilder: (context, index) =>const SizedBox(
+                                height: 8.0,
+                              ),
+                          itemCount: controller.orgFilterDocuments.length),
+                    );
                   } else {
                     return const Center(child: CircularProgressIndicator());
                   }
