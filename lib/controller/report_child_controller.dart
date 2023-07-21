@@ -22,6 +22,7 @@ class ReportChildController extends GetxController {
         file: File(imagePath.value),
       ).then((value) {
         clearController();
+
         Get.snackbar('Success', 'Successfully victim uploaded');
       });
     } else {
@@ -41,9 +42,9 @@ class ReportChildController extends GetxController {
     // Pick an image.
     final XFile? image = await picker.pickImage(source: ImageSource.camera);
     if (image != null) {
-      print('Image Path: ${image.path}');
       imagePath.value = image.path;
       isImagePicked.value = true;
     }
   }
+
 }

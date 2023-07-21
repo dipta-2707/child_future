@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:child_future/controller/adopt_form_controller.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -15,9 +17,11 @@ class AdoptFormView extends GetView<AdoptFormController> {
         child: ListView(
           children: [
             const Text('Please fill up this form carefully.'),
-              SizedBox(height: 10.0,),
-            Text('General information'),
-            SizedBox(height: 10.0,),
+              const SizedBox(height: 10.0,),
+            const Text('General information', style: TextStyle(
+              fontWeight: FontWeight.w500
+            ),),
+            const SizedBox(height: 10.0,),
               Row(
                 children: [
                   Expanded(
@@ -41,7 +45,7 @@ class AdoptFormView extends GetView<AdoptFormController> {
             ),
                 ],
               ),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
             Row(
               children: [
                 Expanded(
@@ -65,9 +69,11 @@ class AdoptFormView extends GetView<AdoptFormController> {
                 ),
               ],
             ),
-            SizedBox(height: 10.0,),
-            Text('Address information'),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
+            const Text('Address information',style: TextStyle(
+                fontWeight: FontWeight.w500
+            )),
+            const SizedBox(height: 10.0,),
             TextFormField(
               controller: controller.presentAddress,
               decoration: const InputDecoration(
@@ -75,7 +81,7 @@ class AdoptFormView extends GetView<AdoptFormController> {
                   labelText: 'Present address'
               ),
             ),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
             TextFormField(
               controller: controller.permanentAddress,
               decoration: const InputDecoration(
@@ -83,10 +89,12 @@ class AdoptFormView extends GetView<AdoptFormController> {
                   labelText: 'Permanent Address'
               ),
             ),
-            SizedBox(height: 10.0,),
-            SizedBox(height: 10.0,),
-            Text('Income source'),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
+            const Text('Income source',style: TextStyle(
+              fontWeight: FontWeight.w500
+            ),),
+            const SizedBox(height: 10.0,),
             Row(
               children: [
                 Expanded(
@@ -110,9 +118,45 @@ class AdoptFormView extends GetView<AdoptFormController> {
                 ),
               ],
             ),
-            SizedBox(height: 10.0,),
-            const Text('Monthly income'),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
+
+
+            const Text('Bank Statement',style: TextStyle(
+                fontWeight: FontWeight.w500
+            ),),
+            Container(
+              width: double.infinity,
+              height: Get.height * 0.25,
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10.0),
+                color: Colors.grey
+              ),
+              child: Obx(
+                ()=> Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    controller.isImagePicked.value?
+                    Image.file(
+                      File(controller.imagePath.value),
+                      width: Get.width,
+                      fit: BoxFit.fill,
+                    ) : const SizedBox(),
+                    IconButton(onPressed: (){
+                      !controller.isImagePicked.value ?
+                      controller.imagePicker() :
+                      controller.clearImage();
+                    },
+                        icon:  Icon(controller.isImagePicked.value?Icons.cancel : Icons.upload, size: 28,
+                          color: !controller.isImagePicked.value? Colors.blue : Colors.red,)),
+                  ],
+                ),
+              ),
+            ),
+            const SizedBox(height: 10.0,),
+            const Text('Monthly income',style: TextStyle(
+                fontWeight: FontWeight.w500
+            ),),
+            const SizedBox(height: 10.0,),
             Row(
               children: [
                 Expanded(
@@ -138,9 +182,11 @@ class AdoptFormView extends GetView<AdoptFormController> {
                 ),
               ],
             ),
-            SizedBox(height: 10.0,),
-            const Text('Yearly income'),
-            SizedBox(height: 10.0,),
+            const SizedBox(height: 10.0,),
+            const Text('Yearly income',style: TextStyle(
+                fontWeight: FontWeight.w500
+            ),),
+            const SizedBox(height: 10.0,),
             Row(
               children: [
                 Expanded(
@@ -167,7 +213,9 @@ class AdoptFormView extends GetView<AdoptFormController> {
               ],
             ),
             const SizedBox(height: 10.0,),
-            const Text('Adopt baby old'),
+            const Text('Adopt baby old',style: TextStyle(
+                fontWeight: FontWeight.w500
+            ),),
             const SizedBox(height: 10.0,),
             TextFormField(
               controller: controller.adoptBabyOld,

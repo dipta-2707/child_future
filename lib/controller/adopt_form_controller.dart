@@ -1,6 +1,10 @@
+import 'dart:io';
+
 import 'package:child_future/Api.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:image_picker/image_picker.dart';
 
 class AdoptFormController extends GetxController{
 
@@ -19,6 +23,20 @@ class AdoptFormController extends GetxController{
     TextEditingController adoptBabyOld = TextEditingController();
     
     void submitForm()async{
+
+
+      //storage file ref with path
+      final ref =AppApi.firebaseStorage.ref().child(
+          'bankStatement/${imagePath.split('.')[0].split("/").last}');
+
+      //uploading image
+      await ref
+          .putFile(File(imagePath.value), SettableMetadata(contentType: 'image/'))
+          .then((p0) {});
+
+      var imageUrl = await ref.getDownloadURL();
+
+
         Map<String, dynamic> data = {};
         data["fatherName"] = fatherName.text.trim();
         data["motherName"] = motherName.text.trim();
@@ -31,10 +49,12 @@ class AdoptFormController extends GetxController{
         data["yearlyIncomeFather"] = yearlyIncomeFather.text.trim();
         data["yearlyIncomeMother"] = yearlyIncomeMother.text.trim();
         data["adoptBabyOld"] = adoptBabyOld.text.trim();
+        data["bankStatement"] = imageUrl;
 
       await  AppApi.firebaseStore.collection('adoptRequests').doc()
             .set(data);
         clearText();
+        clearImage();
 
     }
     @override
@@ -69,5 +89,22 @@ class AdoptFormController extends GetxController{
          yearlyIncomeFather.clear();
          yearlyIncomeMother.clear();
          adoptBabyOld.clear();
+    }
+
+    RxBool isImagePicked = false.obs;
+    RxString imagePath = "".obs;
+    void imagePicker() async {
+      final ImagePicker picker = ImagePicker();
+      // Pick an image.
+      final XFile? image = await picker.pickImage(source: ImageSource.camera);
+      if (image != null) {
+        imagePath.value = image.path;
+        isImagePicked.value = true;
+      }
+    }
+
+    void clearImage(){
+      isImagePicked.value = false;
+      imagePath.value = "";
     }
 }
