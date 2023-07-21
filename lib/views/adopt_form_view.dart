@@ -70,6 +70,70 @@ class AdoptFormView extends GetView<AdoptFormController> {
               ],
             ),
             const SizedBox(height: 10.0,),
+            /// father mother image section ------------------------ >>>>
+            Row(
+              children: [
+                Expanded(child: Container(
+                  width: Get.width,
+                  height: Get.height * 0.2,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10.0),
+                    color: Colors.grey
+                  ),
+                  child: Obx(
+                        ()=> Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        controller.isImagePickedFather.value?
+                        Image.file(
+                          File(controller.imagePathFather.value),
+                          width: Get.width,
+                          fit: BoxFit.fill,
+                        ) : const SizedBox(),
+                        IconButton(onPressed: (){
+                          !controller.isImagePickedFather.value ?
+                          controller.imagePickerFather() :
+                          controller.clearImageFather();
+                        },
+                            icon:  Icon(controller.isImagePickedFather.value?Icons.cancel : Icons.upload, size: 28,
+                              color: !controller.isImagePickedFather.value? Colors.blue : Colors.red,)),
+                      ],
+                    ),
+                  ),
+                )),
+                const SizedBox(width: 10.0,),
+                Expanded(child: Container(
+                  width: Get.width,
+                  height: Get.height * 0.2,
+                  decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(10.0),
+                      color: Colors.grey
+                  ),
+                  child: Obx(
+                        ()=> Stack(
+                      alignment: Alignment.center,
+                      children: [
+                        controller.isImagePickedMother.value?
+                        Image.file(
+                          File(controller.imagePathMother.value),
+                          width: Get.width,
+                          fit: BoxFit.fill,
+                        ) : const SizedBox(),
+                        IconButton(onPressed: (){
+                          !controller.isImagePickedMother.value ?
+                          controller.imagePickerMother() :
+                          controller.clearImageMother();
+                        },
+                            icon:  Icon(controller.isImagePickedMother.value?Icons.cancel : Icons.upload, size: 28,
+                              color: !controller.isImagePickedMother.value? Colors.blue : Colors.red,)),
+                      ],
+                    ),
+                  ),
+                ))
+              ],
+            ),
+            const SizedBox(height: 10.0,),
+
             const Text('Address information',style: TextStyle(
                 fontWeight: FontWeight.w500
             )),
@@ -135,19 +199,19 @@ class AdoptFormView extends GetView<AdoptFormController> {
                 ()=> Stack(
                   alignment: Alignment.center,
                   children: [
-                    controller.isImagePicked.value?
+                    controller.isImagePickedBank.value?
                     Image.file(
-                      File(controller.imagePath.value),
+                      File(controller.imagePathBank.value),
                       width: Get.width,
                       fit: BoxFit.fill,
                     ) : const SizedBox(),
                     IconButton(onPressed: (){
-                      !controller.isImagePicked.value ?
-                      controller.imagePicker() :
-                      controller.clearImage();
+                      !controller.isImagePickedBank.value ?
+                      controller.imagePickerBank() :
+                      controller.clearImageBank();
                     },
-                        icon:  Icon(controller.isImagePicked.value?Icons.cancel : Icons.upload, size: 28,
-                          color: !controller.isImagePicked.value? Colors.blue : Colors.red,)),
+                        icon:  Icon(controller.isImagePickedBank.value?Icons.cancel : Icons.upload, size: 28,
+                          color: !controller.isImagePickedBank.value? Colors.blue : Colors.red,)),
                   ],
                 ),
               ),
@@ -213,7 +277,7 @@ class AdoptFormView extends GetView<AdoptFormController> {
               ],
             ),
             const SizedBox(height: 10.0,),
-            const Text('Adopt baby old',style: TextStyle(
+            const Text('Adopt baby age',style: TextStyle(
                 fontWeight: FontWeight.w500
             ),),
             const SizedBox(height: 10.0,),
@@ -227,7 +291,7 @@ class AdoptFormView extends GetView<AdoptFormController> {
             ),
             const SizedBox(height: 20.0,),
             ElevatedButton(onPressed: (){
-              if(controller.isImagePicked.value && controller.validateALlField()){
+              if(controller.isImagePickedFather.value && controller.isImagePickedMother.value &&  controller.isImagePickedBank.value && controller.validateALlField()){
                 controller.submitForm();
               }else{
                 Get.snackbar('Error', 'all field is required.', backgroundColor: Colors.red);

@@ -11,6 +11,7 @@ class HomePage extends GetView<HomePageController> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
+        leading: null,
         title: Text(
             'Welcome, ${AppApi.firebaseAuth.currentUser?.displayName ?? 'Guest'}'),
         actions: [
