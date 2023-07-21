@@ -21,9 +21,27 @@ class AdoptFormController extends GetxController{
     TextEditingController yearlyIncomeFather = TextEditingController();
     TextEditingController yearlyIncomeMother = TextEditingController();
     TextEditingController adoptBabyOld = TextEditingController();
+
+    /// validate all field
+    bool validateALlField(){
+      if(fatherName.text.isEmpty || motherName.text.isEmpty || fatherNid.text.isEmpty ||
+        motherNid.text.isEmpty
+        || presentAddress.text.isEmpty
+        || permanentAddress.text.isEmpty
+        || sourceOfIncomeMother.text.isEmpty
+        || sourceOfIncomeFather.text.isEmpty
+        || monthlyIncomeMother.text.isEmpty
+        || monthlyIncomeFather.text.isEmpty
+        || yearlyIncomeMother.text.isEmpty
+        || yearlyIncomeFather.text.isEmpty
+        || adoptBabyOld.text.isEmpty
+      ){
+        return false;
+      }
+      return true;
+    }
     
     void submitForm()async{
-
 
       //storage file ref with path
       final ref =AppApi.firebaseStorage.ref().child(
@@ -51,9 +69,10 @@ class AdoptFormController extends GetxController{
         data["adoptBabyOld"] = adoptBabyOld.text.trim();
         data["bankStatement"] = imageUrl;
 
-      await  AppApi.firebaseStore.collection('adoptRequests').doc()
-            .set(data);
-        clearText();
+
+      await AppApi.firebaseStore.collection('adoptRequests').doc().set(data);
+
+    clearText();
         clearImage();
 
     }

@@ -227,7 +227,12 @@ class AdoptFormView extends GetView<AdoptFormController> {
             ),
             const SizedBox(height: 20.0,),
             ElevatedButton(onPressed: (){
-              controller.submitForm();
+              if(controller.isImagePicked.value && controller.validateALlField()){
+                controller.submitForm();
+              }else{
+                Get.snackbar('Error', 'all field is required.', backgroundColor: Colors.red);
+              }
+
             },
                 child: const Text('Submit'))
           ],
