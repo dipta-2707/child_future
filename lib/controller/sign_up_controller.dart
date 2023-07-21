@@ -9,9 +9,9 @@ class SignUpPageController extends GetxController {
   TextEditingController passwordController = TextEditingController();
   TextEditingController userNameController = TextEditingController();
 
-  void signUp() {
+  void signUp() async{
     try {
-      AppApi.firebaseAuth
+     await AppApi.firebaseAuth
           .createUserWithEmailAndPassword(
         email: emailController.text,
         password: passwordController.text,

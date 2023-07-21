@@ -81,9 +81,9 @@ class SignInPage extends GetView<SignInPageController> {
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20.0),
             child: ElevatedButton(
-                onPressed: () {
+                onPressed: () async{
                   try {
-                    AppApi.firebaseAuth
+                 await   AppApi.firebaseAuth
                         .signInWithEmailAndPassword(
                         email:controller.emailController.text, password: controller.passwordController.text)
                         .then((value) {
